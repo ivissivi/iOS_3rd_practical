@@ -11,6 +11,8 @@
 		E918366A27DCC7DE00B3F499 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E918366927DCC7DE00B3F499 /* ContentView.swift */; };
 		E918366C27DCC7E000B3F499 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E918366B27DCC7E000B3F499 /* Assets.xcassets */; };
 		E918366F27DCC7E000B3F499 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E918366E27DCC7E000B3F499 /* Preview Assets.xcassets */; };
+		E918367627DCC90500B3F499 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E918367527DCC90500B3F499 /* ModalView.swift */; };
+		E918367827DCDD6200B3F499 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E918367727DCDD6200B3F499 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		E918366927DCC7DE00B3F499 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E918366B27DCC7E000B3F499 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E918366E27DCC7E000B3F499 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E918367527DCC90500B3F499 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		E918367727DCDD6200B3F499 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 				E918366927DCC7DE00B3F499 /* ContentView.swift */,
 				E918366B27DCC7E000B3F499 /* Assets.xcassets */,
 				E918366D27DCC7E000B3F499 /* Preview Content */,
+				E918367527DCC90500B3F499 /* ModalView.swift */,
+				E918367727DCDD6200B3F499 /* LocationManager.swift */,
 			);
 			path = 3dPractical;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E918367827DCDD6200B3F499 /* LocationManager.swift in Sources */,
+				E918367627DCC90500B3F499 /* ModalView.swift in Sources */,
 				E918366A27DCC7DE00B3F499 /* ContentView.swift in Sources */,
 				E918366827DCC7DE00B3F499 /* _dPracticalApp.swift in Sources */,
 			);
@@ -271,6 +279,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"3dPractical/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow to track your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +308,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"3dPractical/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow to track your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
