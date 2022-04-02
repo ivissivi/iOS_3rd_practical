@@ -11,6 +11,7 @@ import MapKit
 struct ContentView: View {
     @State private var isModalPresented = false
     private let locationManager = LocationManager()
+    @State private var showsUserLocation = false
     var body: some View {
         VStack {
             Text("CONTENT VIEW")
@@ -18,44 +19,56 @@ struct ContentView: View {
             Button("Show modal") {
                 isModalPresented = true
             }
-            MapView()
+            Button("Show/hide user location") {
+                    showsUserLocation.toggle()
+                  }
+            MapView(isUserLocationVisible: $showsUserLocation)
         }
         .sheet(isPresented: $isModalPresented) {
             ModalView(isPresented: $isModalPresented)
         }
     }
-        
 }
 
 struct MapView: UIViewRepresentable {
+    @Binding var isUserLocationVisible: Bool
     typealias UIViewType = MKMapView
+    @State private var isLUClicked = false
+    @State private var isRSUClicked = false
+    @State private var isBATClicked = false
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         
-        let regionCoordinate = CLLocationCoordinate2D(latitude: 56.955, longitude: 24.255)
+        let regionCoordinate = CLLocationCoordinate2D(latitude: 56.946285, longitude: 24.105078)
         
-        let regionSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let regionSpan = MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)
         
         let region = MKCoordinateRegion(center: regionCoordinate, span: regionSpan)
         
         mapView.setRegion(region, animated: true)
         
-        let lidlOne = MKPointAnnotation()
-        lidlOne.coordinate = CLLocationCoordinate2D(latitude: 56.944, longitude: 24.222)
-        lidlOne.title = "Lidl Deglava"
+        let latvijasUniversitate = MKPointAnnotation()
+        latvijasUniversitate.coordinate = CLLocationCoordinate2D(latitude: 56.95, longitude: 24.1167)
+        latvijasUniversitate.title = "LU"
         
-        let lidlTwo = MKPointAnnotation()
-        lidlTwo.coordinate = CLLocationCoordinate2D(latitude: 56.960, longitude: 24.230)
-        lidlTwo.title = "Lidl Mezhciems"
+        let rigasStradinaUniversitate = MKPointAnnotation()
+        rigasStradinaUniversitate.coordinate = CLLocationCoordinate2D(latitude: 56.9328703, longitude: 24.0682983)
+        rigasStradinaUniversitate.title = "RSU"
         
-        mapView.addAnnotations([lidlOne, lidlTwo])
+        let biznesaAugstskolaTuriba = MKPointAnnotation()
+        biznesaAugstskolaTuriba.coordinate = CLLocationCoordinate2D(latitude: 56.9105, longitude: 24.08)
+        biznesaAugstskolaTuriba.title = "BAT"
+        
+        
+        
+        mapView.addAnnotations([latvijasUniversitate, rigasStradinaUniversitate, biznesaAugstskolaTuriba])
         
         let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: MKPlacemark(coordinate: lidlOne.coordinate))
-        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: lidlTwo.coordinate))
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: latvijasUniversitate.coordinate))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: rigasStradinaUniversitate.coordinate))
         request.transportType = .automobile
         
         let directions = MKDirections(request: request)
@@ -83,7 +96,7 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        
+        uiView.showsUserLocation = isUserLocationVisible
     }
 }
 
