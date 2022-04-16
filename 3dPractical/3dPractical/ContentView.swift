@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct ContentView: View {
     @State private var isModalPresented = false
@@ -36,18 +37,18 @@ struct MapView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> MKMapView {
         
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        
         let locationManager = LocationManager()
         
         var userLatitude: Float {
-            return Float(CLLocationManager().location?.coordinate.latitude ?? 0)
+            return Float(CLLocationManager().location?.coordinate.latitude ?? 0 )
            }
            
         var userLongitude: Float {
-               return Float(CLLocationManager().location?.coordinate.longitude ?? 0)
+            return Float(CLLocationManager().location?.coordinate.longitude ?? 0)
            }
-
-        let mapView = MKMapView()
-        mapView.delegate = context.coordinator
         
         let regionCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(userLongitude), longitude: CLLocationDegrees(userLongitude))
         
