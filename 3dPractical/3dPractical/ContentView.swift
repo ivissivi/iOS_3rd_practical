@@ -10,22 +10,19 @@ import MapKit
 
 struct ContentView: View {
     @State private var isModalPresented = false
-    private let locationManager = LocationManager()
     @State private var showsUserLocation = false
+    
     var body: some View {
         VStack {
             Text("CONTENT VIEW")
                 .padding()
-            Button("Show modal") {
+            Button("Filters") {
                 isModalPresented = true
             }
-            Button("Show/hide user location") {
-                    showsUserLocation.toggle()
-                  }
             MapView(isUserLocationVisible: $showsUserLocation)
         }
         .sheet(isPresented: $isModalPresented) {
-            ModalView(isPresented: $isModalPresented)
+            ModalView(isPresented: $isModalPresented, showsUserLocation: $showsUserLocation)
         }
     }
 }
@@ -38,11 +35,21 @@ struct MapView: UIViewRepresentable {
     @State private var isBATClicked = false
     
     func makeUIView(context: Context) -> MKMapView {
+        
+        let locationManager = LocationManager()
+        
+        var userLatitude: Float {
+            return Float(CLLocationManager().location?.coordinate.latitude ?? 0)
+           }
+           
+        var userLongitude: Float {
+               return Float(CLLocationManager().location?.coordinate.longitude ?? 0)
+           }
+
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-        mapView.showsUserLocation = true
         
-        let regionCoordinate = CLLocationCoordinate2D(latitude: 56.946285, longitude: 24.105078)
+        let regionCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(userLongitude), longitude: CLLocationDegrees(userLongitude))
         
         let regionSpan = MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)
         
@@ -62,20 +69,21 @@ struct MapView: UIViewRepresentable {
         biznesaAugstskolaTuriba.coordinate = CLLocationCoordinate2D(latitude: 56.9105, longitude: 24.08)
         biznesaAugstskolaTuriba.title = "BAT"
         
-        
+        let userLocation = MKPointAnnotation()
+        userLocation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(userLatitude), longitude: CLLocationDegrees(userLongitude))
         
         mapView.addAnnotations([latvijasUniversitate, rigasStradinaUniversitate, biznesaAugstskolaTuriba])
         
         let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: MKPlacemark(coordinate: latvijasUniversitate.coordinate))
-        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: rigasStradinaUniversitate.coordinate))
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: userLocation.coordinate))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: biznesaAugstskolaTuriba.coordinate))
         request.transportType = .automobile
-        
+            
         let directions = MKDirections(request: request)
         directions.calculate {response, error in
-            guard let route = response?.routes.first else { return }
-            mapView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 32, left: 32, bottom: 32, right: 32), animated: true)
-            mapView.addOverlay(route.polyline)
+        guard let route = response?.routes.first else { return }
+        mapView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 32, left: 32, bottom: 32, right: 32), animated: true)
+        mapView.addOverlay(route.polyline)
         }
         
         return mapView
