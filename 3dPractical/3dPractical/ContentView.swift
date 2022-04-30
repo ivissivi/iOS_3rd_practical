@@ -79,6 +79,7 @@ struct MapView: UIViewRepresentable {
         request.source = MKMapItem(placemark: MKPlacemark(coordinate: userLocation.coordinate))
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: biznesaAugstskolaTuriba.coordinate))
         request.transportType = .automobile
+        
             
         let directions = MKDirections(request: request)
         directions.calculate {response, error in
